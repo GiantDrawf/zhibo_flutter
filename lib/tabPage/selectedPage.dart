@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import '../components/itemSwiper.dart';
-import '../utils.dart';
+import '../util/utils.dart';
 
 class SelectedPage extends StatelessWidget {
   final List swiperData;

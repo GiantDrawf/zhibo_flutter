@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils.dart';
+import '../util/utils.dart';
 
 class ItemSwiper extends StatelessWidget {
   final Map itemData;

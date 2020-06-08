@@ -3,7 +3,7 @@ import 'tabPage/tabPage.dart';
 
 void main() {
   runApp(new MaterialApp(
-    title: 'My app', // used by the OS task switcher
+    title: 'zhibo_flutter', // used by the OS task switcher
     home: Scaffold(
         appBar: AppBar(
           title: new Center(
