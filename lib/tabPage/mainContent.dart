@@ -1,34 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import './selectedPage.dart';
+import '../services/selectedPageApis.dart';
 
-class MainContent extends StatelessWidget {
-  final String currentTab;
+class MainContent extends StatefulWidget {
   MainContent({
     Key key,
-    this.currentTab: 'selected',
+    this.currentTab,
   }) : super(key: key);
 
-  List<Widget> generateMainContent() {
-    var contentList = new List<Widget>();
-    if (this.currentTab == 'selected') {
-      contentList.add(new Container(
-        height: 170,
-        child: new Swiper(
-          autoplay: true,
-          itemBuilder: (BuildContext context, int index) {
-            return new Image.network(
-              "http://via.placeholder.com/350x150",
-              fit: BoxFit.fill,
-            );
-          },
-          itemCount: 3,
-          pagination: new SwiperPagination(alignment: Alignment.bottomRight),
-        ),
-      ));
-    } else if (this.currentTab == 'today') {
-      contentList.add(new Text(this.currentTab));
-    } else if (this.currentTab == 'classify') {
-      contentList.add(new Text(this.currentTab));
+  final String currentTab;
+
+  @override
+  _MainContentState createState() => _MainContentState();
+}
+
+class _MainContentState extends State<MainContent> {
+  List swiperData = [];
+  List columnsList = [];
+
+  void getPageData() async {
+    var swiperData = await getSwiperData();
+    var columnsList = await getColumnsList();
+    setState(() {
+      this.swiperData = swiperData;
+      this.columnsList = columnsList;
+    });
+  }
+
+  Widget generateMainContent() {
+    var contentList;
+    if (widget.currentTab == 'selected') {
+      contentList = new SelectedPage(
+        swiperData: this.swiperData,
+        columnsList: this.columnsList,
+      );
+    } else if (widget.currentTab == 'today') {
+      contentList = new Text(widget.currentTab);
+    } else if (widget.currentTab == 'classify') {
+      contentList = new Text(widget.currentTab);
     }
 
     return contentList;
@@ -36,6 +45,9 @@ class MainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Column(children: generateMainContent());
+    // 初始化获取数据
+    getPageData();
+
+    return new Container(child: generateMainContent());
   }
 }
