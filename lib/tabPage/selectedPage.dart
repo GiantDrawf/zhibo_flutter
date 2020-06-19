@@ -7,7 +7,15 @@ import '../util/utils.dart';
 class SelectedPage extends StatelessWidget {
   final List swiperData;
   final List columnsList;
-  SelectedPage({Key key, this.swiperData, this.columnsList}) : super(key: key);
+  final List liveList;
+  final bool liveListIsEnd;
+  SelectedPage(
+      {Key key,
+      this.swiperData,
+      this.columnsList,
+      this.liveList,
+      this.liveListIsEnd})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +106,25 @@ class SelectedPage extends StatelessWidget {
             ],
           ),
         ),
+        new Scrollbar(
+          child: new SingleChildScrollView(
+            child: new Column(
+              children: this
+                  .liveList
+                  .map((item) => (new Container(
+                        height: 160,
+                        margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(handleUrl(item["thumb_new"])),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      )))
+                  .toList(),
+            ),
+          ),
+        )
       ],
     );
   }
